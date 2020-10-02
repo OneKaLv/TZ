@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
-        new MySQL("localhost","antiscam","root","8pdSReCgpwqD");
+        new MySQL("test","test","test","test");
         new onBreak(this);
         new LastCommand().register();
     }
