@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TZ">
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <root id="archive" name="TZ.jar">
+      <element id="module-output" name="TZ" />
+    </root>
+  </artifact>
+</component>
