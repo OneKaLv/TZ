@@ -1,43 +1,22 @@
 package by.OneKa.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.command.*;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandMap;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
-
 public abstract class AbstractCommand implements CommandExecutor, TabExecutor {
 
+    protected static CommandMap cmap;
     protected final String command;
     protected final String description;
     protected final List<String> alias;
     protected final String usage;
     protected final String permMessage;
 
-    protected static CommandMap cmap;
-
     public AbstractCommand(String command) {
         this(command, null, null, null, null);
-    }
-
-    public AbstractCommand(String command, String usage) {
-        this(command, usage, null, null, null);
-    }
-
-    public AbstractCommand(String command, String usage, String description) {
-        this(command, usage, description, null, null);
-    }
-
-    public AbstractCommand(String command, String usage, String description, String permissionMessage) {
-        this(command, usage, description, permissionMessage, null);
-    }
-
-    public AbstractCommand(String command, String usage, String description, List<String> aliases) {
-        this(command, usage, description, null, aliases);
     }
 
     public AbstractCommand(String command, String usage, String description, String permissionMessage, List<String> aliases) {

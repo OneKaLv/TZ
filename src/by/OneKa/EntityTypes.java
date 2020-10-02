@@ -5,25 +5,14 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-import java.util.UUID;
 
 public enum EntityTypes {
-    CustomZombie(54, by.OneKa.entity.CustomZombie.class);
+    CustomZombie(by.OneKa.entity.CustomZombie.class);
 
-    private static Map<Integer, UUID> assoc;
-    int id;
     Class<? extends Entity> custom;
 
-    private EntityTypes(final int id, final Class<? extends Entity> custom) {
-        this.id = id;
+    private EntityTypes(final Class<? extends Entity> custom) {
         this.custom = custom;
-    }
-
-    public static void spawnEntity(final Entity entity, final Location loc) {
-        loc.getChunk().load();
-        entity.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
-        ((CraftWorld) loc.getWorld()).getHandle().addEntity(entity);
     }
 
     public static void spawnEntity(final EntityTypes entityType, final Location loc, final Spawner spawner) {

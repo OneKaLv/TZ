@@ -15,9 +15,6 @@ import java.util.Random;
 
 public class CustomZombie extends EntityMonster implements Mob {
 
-    private final LivingEntity livingEntity;
-    private Spawner spawner;
-
     public CustomZombie(Spawner spawner) {
         super(EntityTypes.ZOMBIE, spawner.getWorld());
         try {
@@ -33,10 +30,8 @@ public class CustomZombie extends EntityMonster implements Mob {
             exc.printStackTrace();
         }
         this.goalSelector.a(0, new PathfinderGoalAvoidTarget<>(this, EntityPlayer.class, 10, 0.3, 0.6));
-        this.livingEntity = (LivingEntity) this.getBukkitEntity();
         this.setCustomName(new ChatComponentText(this.getMobName()));
         this.setCustomNameVisible(true);
-        (this.spawner = spawner).register(this);
     }
 
     @Override
