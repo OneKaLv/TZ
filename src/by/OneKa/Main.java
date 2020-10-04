@@ -8,13 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
-        new MySQL("test","test","test","test");
+        new MySQL("test", "test", "test", "test");
         new onBreak(this);
         new LastCommand().register();
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 }

@@ -5,8 +5,17 @@ import by.OneKa.database.MySQL;
 import com.google.common.collect.Sets;
 import net.minecraft.server.v1_13_R2.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_13_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_13_R2.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -48,12 +57,18 @@ public class CustomZombie extends EntityMonster implements Mob {
     @Override
     public void die() {
         if (this.killer instanceof EntityPlayer) {
-            MySQL.insert(killer.getName(),this.getMobName());
-            org.bukkit.inventory.ItemStack magic_dust = new ItemStack(Material.ROTTEN_FLESH);
-            ItemMeta magiMeta = magic_dust.getItemMeta();
-            magiMeta.setDisplayName(killer.getName());
-            magic_dust.setItemMeta(magiMeta);
-            Bukkit.getWorlds().get(0).dropItemNaturally(this.getBukkitEntity().getLocation(), magic_dust);
+            MySQL.insert(killer.getName(), this.getMobName());
+            Location loc = this.getBukkitEntity().getLocation();
+            Item entityItem = loc.getWorld().dropItem(loc, new ItemStack(Material.ROTTEN_FLESH));
+            entityItem.setCustomNameVisible(true);
+            DataWatcher data;
+            for(Player p : Bukkit.getServer().getOnlinePlayers()){
+                System.out.println(p.getName());
+                entityItem.setCustomName(p.getName());
+                data = ((CraftEntity)entityItem).getHandle().getDataWatcher();
+                PacketPlayOutEntityMetadata packetPlayOutEntityMetadata = new PacketPlayOutEntityMetadata(entityItem.getEntityId(),data,true);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packetPlayOutEntityMetadata);
+            }
         }
         super.die();
     }
